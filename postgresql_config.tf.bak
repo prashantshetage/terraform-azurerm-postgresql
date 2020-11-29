@@ -1,0 +1,9 @@
+// Sets up configuration for postgresql server
+//**********************************************************************************************
+resource "azurerm_postgresql_configuration" "postgresql_config" {
+  name                = local.postgresql_config
+  resource_group_name = var.resource_group_name
+  server_name         = azurerm_postgresql_server.postgresql[0].name
+  value               = var.value
+}
+//**********************************************************************************************
