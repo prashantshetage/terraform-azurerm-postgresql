@@ -1,9 +1,5 @@
 output "postgresql_server" {
-  value = local.postgresql_server_object
-}
-
-output "postgresql_server_replica" {
-  value = local.postgresql_replica_object
+  value = azurerm_postgresql_server.postgresql
 }
 
 output "postgresql_database" {

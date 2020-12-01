@@ -34,11 +34,11 @@ variable "pgserver_suffix" {
   default     = ""
 }
 
-variable "pgserver_replica_suffix" {
+/* variable "pgserver_replica_suffix" {
   type        = string
   description = "(Optional) Postgresql replica prefix"
   default     = "replica"
-}
+} */
 
 variable "pgserver_georestore_suffix" {
   type        = string
@@ -243,12 +243,9 @@ variable "it_depends_on" {
 // Local Values
 //**********************************************************************************************
 locals {
-  timeout_duration          = "1h"
-  postgresql_name           = "${var.pgserver_prefix}${random_string.server_name.result}${var.pgserver_suffix}"
-  firewall_rule             = "fw-${local.postgresql_name}"
-  vnet_rule                 = "vnet-rule-${local.postgresql_name}"
-  postgresql_config         = "pgconf-${local.postgresql_name}"
-  postgresql_server_object  = var.pgserver_count >= 1 ? azurerm_postgresql_server.postgresql[0] : null
-  postgresql_replica_object = var.pgserver_count >= 1 && length(var.pgserver_replica_locations) >= 1 ? azurerm_postgresql_server.postgresql_replica[0] : null
+  timeout_duration = "1h"
+  postgresql_name  = "${var.pgserver_prefix}${random_string.server_name.result}${var.pgserver_suffix}"
+  firewall_rule    = "fw-${local.postgresql_name}"
+  vnet_rule        = "vnet-rule-${local.postgresql_name}"
 }
 //**********************************************************************************************
