@@ -17,6 +17,7 @@ resource "azurerm_postgresql_server" "postgresql" {
   create_mode         = var.create_mode
 
   creation_source_server_id = var.creation_source_server_id
+  restore_point_in_time     = var.create_mode == "PointInTimeRestore" ? var.restore_point_in_time : null
 
   administrator_login          = var.create_mode == "Default" ? var.administrator_login : null
   administrator_login_password = var.create_mode == "Default" ? var.administrator_login_password : null
@@ -42,6 +43,13 @@ resource "azurerm_postgresql_server" "postgresql" {
     retention_days             = var.threat_detection_policy.retention_days
     storage_account_access_key = var.threat_detection_policy.storage_account_access_key
     storage_endpoint           = var.threat_detection_policy.storage_endpoint
+  }
+
+  dynamic "identity" {
+    for_each = var.identity[*]
+    content {
+      type = identity.value.type
+    }
   }
 
   tags       = merge(var.resource_tags, var.deployment_tags)

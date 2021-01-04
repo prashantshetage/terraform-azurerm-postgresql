@@ -220,6 +220,16 @@ variable "threat_detection_policy" {
   }
 }
 
+variable "identity" {
+  type = object({
+    type = string #(Required) The type of identity used for the managed cluster
+  })
+  description = "(Optional) Managed Identity to interact with Azure APIs"
+  default = {
+    type = "SystemAssigned"
+  }
+}
+
 variable "resource_tags" {
   type        = map(string)
   description = "(Optional) Tags for resources"
